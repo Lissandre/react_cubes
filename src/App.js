@@ -14,7 +14,7 @@ function App() {
     if( number === easter_egg ){
       dispatch({type :'EASTER_EGGS', number : number})
     }
-  }, [number])
+  }, [number, easter_egg])
 
   return (
     <>

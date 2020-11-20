@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useMemo } from 'react'
 import { useLoader, useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
 import { TweenMax } from 'gsap'
@@ -6,7 +6,6 @@ import { TweenMax } from 'gsap'
 function Cube({ position, color, number, easter_egg, stop }) {
   const font = useLoader(THREE.FontLoader, './helvetiker_regular.typeface.json')
   const cube = useRef()
-  const [hovered, setHover] = useState(false)
 
   const config = useMemo(
     () => ({ font, size: 0.5, height: 0.2, curveSegments: 10, bevelEnabled: false, bevelThickness: 0.1, bevelSize: 0.5, bevelOffset: 0, bevelSegments: 10 }),
@@ -41,8 +40,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
       <mesh
         position={position}
         ref={cube}
-        onPointerOver={(event) => setHover(true)}
-        onPointerOut={(event) => setHover(false)}>
+      >
         <sphereBufferGeometry args={[0.5, 10, 10]} />
         <meshLambertMaterial color={color} />
       </mesh>
@@ -59,8 +57,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
         </mesh>
         <mesh
           position={position}
-          onPointerOver={(event) => setHover(true)}
-          onPointerOut={(event) => setHover(false)}>
+        >
           <boxBufferGeometry args={[1, 1, 1]} />
           <meshLambertMaterial color={color} />
         </mesh>
