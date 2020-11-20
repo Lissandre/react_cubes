@@ -7,6 +7,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
   const font = useLoader(THREE.FontLoader, './helvetiker_regular.typeface.json')
   const cube = useRef()
   const egg = useRef()
+  const light = useRef()
 
   const config = useMemo(
     () => ({ font, size: 0.5, height: 0.2, curveSegments: 10, bevelEnabled: false, bevelThickness: 0.1, bevelSize: 0.5, bevelOffset: 0, bevelSegments: 10 }),
@@ -36,6 +37,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
     }
     if(number === 17) {
       egg.current.rotation.y += 0.01
+      light.current.target = egg.current
     }
   })
 
@@ -49,28 +51,33 @@ function Cube({ position, color, number, easter_egg, stop }) {
   return (
     <group ref={cube}>
       {easter_egg === number &&
-        <mesh
-          position={[position[0], position[1]+1, position[2]]}
-          scale={[0.4, 0.4, 0.4]}
-          rotation={[0,-Math.PI/25,-Math.PI/10]}
-          ref={egg}
-        >
-          <latheBufferGeometry args={[points, 32]} />
-          <meshLambertMaterial color={color} />
-        </mesh>
+        <group position={[position[0], position[1]+1, position[2]]}>
+            <mesh
+              scale={[0.4, 0.4, 0.4]}
+              rotation={[0,-Math.PI/25,-Math.PI/10]}
+              ref={egg}
+              castShadow
+            >
+              <latheBufferGeometry args={[points, 32]} />
+              <meshLambertMaterial color={color} emissive={'#ffd700'} emissiveIntensity={0.8}/>
+            </mesh>
+            <spotLight ref={light} translateY={20} angle={Math.PI/8} intensity={5} color={'#ffffff'} castShadow/>
+        </group>
       }
       <mesh
         position={[position[0]-0.4, position[1]+0.35, position[2]+0.2]}
         rotation={[-Math.PI/2,0,0]}
+        receiveShadow
       >
         <textGeometry args={[coolNumber(number), config]}/>
-        <meshLambertMaterial color={color} />
+        <meshLambertMaterial color={color} emissive={color} emissiveIntensity={0.02}/>
       </mesh>
       <mesh
       position={position}
+      receiveShadow
     >
       <boxBufferGeometry args={[1, 1, 1]} />
-      <meshLambertMaterial color={color} />
+      <meshLambertMaterial color={color} emissive={color} emissiveIntensity={0.06} />
     </mesh>
   </group>
   )
