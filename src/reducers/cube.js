@@ -4,6 +4,7 @@ export const stateInit = {
   number: 0,
   cubes: [],
   easter_egg: 17,
+  stop: true
 }
 
 export const reducer = (state = stateInit, action = {}) => {
@@ -14,7 +15,7 @@ export const reducer = (state = stateInit, action = {}) => {
       const cube = {
         color: colors[Math.floor(Math.random()*colors.length)],
         number: state.number,
-        stop: false,
+        stop: true,
       }
       return {
         ...state,

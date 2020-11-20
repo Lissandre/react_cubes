@@ -1,16 +1,17 @@
 import React, { useRef, useState, useMemo } from 'react'
-import { useLoader } from 'react-three-fiber'
+import { useLoader, useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
+import { TweenMax } from 'gsap'
 
 function Cube({ position, color, number, easter_egg, stop }) {
   const font = useLoader(THREE.FontLoader, './helvetiker_regular.typeface.json')
+  const cube = useRef()
+  const [hovered, setHover] = useState(false)
+
   const config = useMemo(
     () => ({ font, size: 0.5, height: 0.2, curveSegments: 10, bevelEnabled: false, bevelThickness: 0.1, bevelSize: 0.5, bevelOffset: 0, bevelSegments: 10 }),
     [font]
   )
-  const mesh = useRef()
-  const [hovered, setHover] = useState(false)
-  console.log(position);
 
   const coolNumber = (number) => {
     if(number.toString().length === 1){
@@ -20,11 +21,26 @@ function Cube({ position, color, number, easter_egg, stop }) {
     }
   }
 
+  let count = 0
+  useFrame(() => {
+    if (stop === false) {
+      cube.current.position.y = Math.sin(count)/10
+      count += 0.1
+    }
+    else {
+      TweenMax.to(cube.current.position, {
+        duration: 0.3,
+        y: 0,
+      })
+      count = 0
+    }
+  })
+
   if (easter_egg === number+1)
     return (
       <mesh
         position={position}
-        ref={mesh}
+        ref={cube}
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <sphereBufferGeometry args={[0.5, 10, 10]} />
@@ -33,17 +49,16 @@ function Cube({ position, color, number, easter_egg, stop }) {
     )
   else
     return (
-      <group>
+      <group ref={cube}>
         <mesh
           position={[position[0]-0.4, position[1]+0.35, position[2]+0.2]}
           rotation={[-Math.PI/2,0,0]}
         >
-          <textGeometry args={[coolNumber(number), config]}/>
+          <textGeometry args={[coolNumber(number+1), config]}/>
           <meshLambertMaterial color={color} />
         </mesh>
         <mesh
           position={position}
-          ref={mesh}
           onPointerOver={(event) => setHover(true)}
           onPointerOut={(event) => setHover(false)}>
           <boxBufferGeometry args={[1, 1, 1]} />
