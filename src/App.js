@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <Button onClick={() => dispatch({ type: "ADD_CUBE" })}>
-        ADD CIRCLE
+        ADD CUBE
       </Button>
       <Button primary onClick={() => dispatch({ type: "SHUFFLE" })}>
         SHUFFLE
@@ -34,7 +34,7 @@ function App() {
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         {cubes.length > 0 &&
-          cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[1*i, 0, 0]} />)}
+          cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[-6 + 1.1*(i%12), 0, 0]} />)}
       </Canvas>
     </>
   );
