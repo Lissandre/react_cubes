@@ -31,7 +31,7 @@ export const reducer = (state = stateInit, action = {}) => {
       }
     case CHANGE_ODD:
       cubes = state.cubes.map((cube) => {
-        if (cube.number % 2 === 1) cube.stop = false
+        if (cube.number % 2 === 0) cube.stop = false
         return { ...cube }
       })
       return {
@@ -40,7 +40,7 @@ export const reducer = (state = stateInit, action = {}) => {
       }
     case STOP_ODD:
       cubes = state.cubes.map((cube) => {
-        if (cube.number % 2 === 1) cube.stop = true
+        if (cube.number % 2 === 0) cube.stop = true
         return { ...cube }
       })
       return {
