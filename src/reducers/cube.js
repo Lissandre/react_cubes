@@ -1,12 +1,12 @@
 import { ADD_CUBE, SHUFFLE, CHANGE_ODD, STOP_ODD } from '../constants/actions';
 
-const stateInit = {
+export const stateInit = {
   number: 0,
   cubes: [],
   easter_egg: 17,
 }
 
-const reducer = (state = stateInit, action = {}) => {
+export const reducer = (state = stateInit, action = {}) => {
   let cubes
   switch(action.type){
     case ADD_CUBE :
@@ -53,5 +53,3 @@ const reducer = (state = stateInit, action = {}) => {
       return state
   }
 }
-
-export default reducer
