@@ -5,7 +5,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
   const mesh = useRef()
   const [hovered, setHover] = useState(false)
 
-  if (easter_egg === number)
+  if (easter_egg === number+1)
     return (
       <mesh
         position={position}
@@ -13,7 +13,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <sphereBufferGeometry args={[0.5, 10, 10]} />
-        <meshStandardMaterial color={color} />
+        <meshToonMaterial color={color} />
       </mesh>
     )
   else
@@ -24,7 +24,7 @@ function Cube({ position, color, number, easter_egg, stop }) {
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <boxBufferGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={color} />
+        <meshToonMaterial color={color} />
       </mesh>
     )
 }

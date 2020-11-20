@@ -30,11 +30,11 @@ function App() {
       <Button primary onClick={() => dispatch({ type: "CHANGE_ODD" })}>
         START ODD NUMBER
       </Button>
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+      <Canvas colorManagement={ true } pixelRatio={window.devicePixelRatio} camera={{ position: [-0.5, 2, 3] }}>
+        {/* <ambientLight /> */}
+        <pointLight position={[0, 2, 2]} />
         {cubes.length > 0 &&
-          cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[-6 + 1.1*(i%12), 0, 0]} />)}
+          cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[-3 + 1.1* (i % 7), 0 , 2 - 1.1 * (Math.floor(i / 7))]} />)}
       </Canvas>
     </>
   );
