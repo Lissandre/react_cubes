@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react'
+import { useReducer, useEffect, Suspense } from 'react'
 
 import Cube from "./Styles/Cube"
 import Button from "./Styles/Button"
@@ -30,11 +30,12 @@ function App() {
       <Button primary onClick={() => dispatch({ type: "CHANGE_ODD" })}>
         START ODD NUMBER
       </Button>
-      <Canvas colorManagement={ true } pixelRatio={window.devicePixelRatio} camera={{ position: [-0.5, 2, 3] }}>
-        {/* <ambientLight /> */}
+      <Canvas colorManagement={ true } pixelRatio={window.devicePixelRatio} camera={{ position: [0, 2, 3] }}>
         <pointLight position={[0, 2, 2]} />
-        {cubes.length > 0 &&
-          cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[-3 + 1.1* (i % 7), 0 , 2 - 1.1 * (Math.floor(i / 7))]} />)}
+        <Suspense fallback={null}>
+          {cubes.length > 0 &&
+            cubes.map((cube, i) => <Cube key={i} {...cube } easter_egg={ easter_egg } position={[-3.3 + 1.1* (i % 7), 0 , 2 - 1.1 * (Math.floor(i / 7))]} />)}
+        </Suspense>
       </Canvas>
     </>
   );
